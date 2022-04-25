@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -41,7 +44,6 @@ public class ProjectController {
     }
     @DeleteMapping("/{identifier}")
     public Project deleteProject(@PathVariable String identifier){
-        Project project = projectService.deleteByProjectIdentifier(identifier);
-        return project;
+        return projectService.deleteByProjectIdentifier(identifier);
     }
 }
