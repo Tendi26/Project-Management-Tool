@@ -1,6 +1,7 @@
 package com.ProjectManagementTool.PMTool.Web;
 
 import com.ProjectManagementTool.PMTool.Services.ProjectService;
+import com.ProjectManagementTool.PMTool.Services.ValidationService;
 import com.ProjectManagementTool.PMTool.domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,15 +24,12 @@ import java.util.Map;
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private ValidationService validationService;
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
-        if(result.hasErrors()){
-            Map<String, String> errorMap = new HashMap<>();
-            for (FieldError error:result.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<?> errorMap = validationService.FieldErrorValidationService(result);
+        if(errorMap != null) return errorMap;
         Project project1 = projectService.saveOrUpdateProject(project);
         return new ResponseEntity<>(project1, HttpStatus.CREATED);
     }
