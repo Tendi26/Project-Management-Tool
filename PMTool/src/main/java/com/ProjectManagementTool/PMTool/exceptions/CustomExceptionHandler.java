@@ -10,10 +10,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestController
 @ControllerAdvice
-public class UniqueKeyExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
-    public final ResponseEntity<Object> handleUniqueKeyException(UniqueKeyException ex, WebRequest request){
+    public final ResponseEntity<Object> handleUniqueKey(UniqueKeyException ex, WebRequest request){
         UniqueKeyExceptionResponse exceptionResponse = new UniqueKeyExceptionResponse(ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleProjectNotFound(ProjectNotFoundException ex, WebRequest request){
+        ProjectNotFoundExceptionResponse exceptionResponse = new ProjectNotFoundExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
