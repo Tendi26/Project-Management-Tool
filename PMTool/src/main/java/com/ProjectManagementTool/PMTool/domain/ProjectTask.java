@@ -13,8 +13,8 @@ public class ProjectTask {
     private Long id;
     @Column(updatable = false)
     private String projectSequence;
-    @NotBlank(message = "Please include project summary")
-    private String Summary;
+//    @NotBlank(message = "Please include project summary")
+    private String summary;
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
@@ -45,7 +45,7 @@ public class ProjectTask {
         return "ProjectTask{" +
                 "id=" + id +
                 ", projectSequence='" + projectSequence + '\'' +
-                ", Summary='" + Summary + '\'' +
+                ", Summary='" + summary + '\'' +
                 ", acceptanceCriteria='" + acceptanceCriteria + '\'' +
                 ", status='" + status + '\'' +
                 ", priority=" + priority +
@@ -73,12 +73,10 @@ public class ProjectTask {
     }
 
     public String getSummary() {
-        return Summary;
+        return summary;
     }
 
-    public void setSummary(String summary) {
-        Summary = summary;
-    }
+    public void setSummary(String summary) {this.summary = summary;}
 
     public String getAcceptanceCriteria() {
         return acceptanceCriteria;
